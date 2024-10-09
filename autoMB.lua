@@ -156,12 +156,12 @@ local storms = {
 local elements = {
 	['Light'] = {spell=nil,helix='Luminohelix',ga=nil,ja=nil,ra=nil,jutsu=nil,white='Banish',holy="Holy",drain=nil},
 	['Dark'] = {spell=nil,helix='Noctohelix',ga=nil,ja=nil,ra=nil,jutsu=nil,white=nil,holy=nil,drain="Drain"},
-	['Thunder'] = {spell='Thunder',helix='Ionohelix',ga='Thundaga',ja='Thundaja',ra='Thundara',jutsu='Raiton',white=nil,holy=nil,drain=nil},
-	['Ice'] = {spell='Blizzard',helix='Cryohelix',ga='Blizzaga',ja='Blizzaja',ra='Blizzara',jutsu='Hyoton',white=nil,holy=nil,drain=nil},
-	['Fire'] = {spell='Fire',helix='Pyrohelix',ga='Firaga',ja='Firaja',ra='Fira',jutsu='Katon',white=nil,holy=nil,drain=nil},
-	['Wind'] = {spell='Aero',helix='Anemohelix',ga='Aeroga',ja='Aeroja',ra='Aerora',jutsu='Huton',white=nil,holy=nil,drain=nil},
-	['Water'] = {spell='Water',helix='Hydrohelix',ga='Waterga',ja='Waterja',ra='Watera',jutsu='Suiton',white=nil,holy=nil,drain=nil},
-	['Earth'] = {spell='Stone',helix='Geohelix',ga='Stonega',ja='Stoneja',ra='Stonera',jutsu='Doton',white=nil,holy=nil,drain=nil},
+	['Thunder'] = {spell='サンダー',helix='Ionohelix',ga='Thundaga',ja='Thundaja',ra='Thundara',jutsu='Raiton',white=nil,holy=nil,drain=nil},
+	['Ice'] = {spell='ブリザド',helix='Cryohelix',ga='Blizzaga',ja='Blizzaja',ra='Blizzara',jutsu='Hyoton',white=nil,holy=nil,drain=nil},
+	['Fire'] = {spell='ファイア',helix='Pyrohelix',ga='Firaga',ja='Firaja',ra='Fira',jutsu='Katon',white=nil,holy=nil,drain=nil},
+	['Wind'] = {spell='エアロ',helix='Anemohelix',ga='Aeroga',ja='Aeroja',ra='Aerora',jutsu='Huton',white=nil,holy=nil,drain=nil},
+	['Water'] = {spell='ウォータ',helix='Hydrohelix',ga='Waterga',ja='Waterja',ra='Watera',jutsu='Suiton',white=nil,holy=nil,drain=nil},
+	['Earth'] = {spell='ストーン',helix='Geohelix',ga='Stonega',ja='Stoneja',ra='Stonera',jutsu='Doton',white=nil,holy=nil,drain=nil},
 }
 
 local cast_types = {'spell', 'helix', 'ga', 'ja', 'ra', 'jutsu', 'white', 'holy', 'drain'}
@@ -282,7 +282,7 @@ end
 
 function check_recast(spell_name)
     local recasts = windower.ffxi.get_spell_recasts()
-	local spell = res.spells:with('en', spell_name)
+	local spell = res.spells:with('ja', spell_name)
 	if (spell == nil) then
 		return 0
 	end
@@ -345,7 +345,7 @@ function cast_spell(spell_cmd, target)
 	if (settings.gearswap) then
 		windower.send_command('gs c bursting')
 	end
-	windower.send_command('input /ma "'..spell_cmd..'" <t>')
+	windower.send_command('input /ma "'..windower.to_shift_jis(spell_cmd)..'" <t>')
 end
 
 function get_spell(skillchain, last_spell, second_burst, target_change)
@@ -399,7 +399,7 @@ function get_spell(skillchain, last_spell, second_burst, target_change)
 		tier = tier >= 1 and tier or 1
 		tier = cast_type == 'jutsu' and tier > 3 and 3 or tier
 
-		spell = spell .. (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and ' ' or ''))
+		spell = spell .. (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and magic_tiers[tier].suffix or ''))
 
 		local recast = check_recast(spell)
 		if (recast > 0) then
@@ -408,7 +408,7 @@ function get_spell(skillchain, last_spell, second_burst, target_change)
 				while (tier > 1) do
 					tier = tier - 1
 					tier = (tier >= 1 and tier or 1)
-					spell = spell .. (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and ' ' or ''))
+					spell = spell .. (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and magic_tiers[tier].suffix or ''))
 
 					local recast = check_recast(spell)
 					if (not recast or recast <= 0) then
@@ -428,7 +428,7 @@ function get_spell(skillchain, last_spell, second_burst, target_change)
 				spell = elements[element][cast_type]
 
 				tier = (tier >= 1 and tier or 1)
-				spell = spell .. (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and ' ' or ''))
+				spell = spell .. (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and magic_tiers[tier].suffix or ''))
 			
 				local recast = check_recast(spell)
 				if (recast == 0) then
