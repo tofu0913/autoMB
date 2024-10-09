@@ -165,7 +165,7 @@ local elements = {
 }
 
 local cast_types = {'spell', 'helix', 'ga', 'ja', 'ra', 'jutsu', 'white', 'holy', 'drain'}
-local spell_users = {'BLM', 'RDM', 'DRK', 'GEO'}
+local spell_users = {'BLM', 'RDM', 'DRK', 'GEO', 'SCH'}
 local jutsu_users = {'NIN'}
 local helix_users = {'SCH'}
 
