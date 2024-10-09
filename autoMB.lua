@@ -560,9 +560,9 @@ windower.register_event('incoming chunk', function(id, packet, data, modified, i
 		return
 	end
 	local now = os.clock()
-	if (now < last_packet_time + min_packet_time) then
-		return
-	end
+	-- if (now < last_packet_time + min_packet_time) then
+		-- return
+	-- end
 	last_packet_time = now
 
 	local actions_packet = windower.packets.parse_action(packet)
