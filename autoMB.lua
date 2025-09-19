@@ -405,17 +405,18 @@ function get_spell(skillchain, last_spell, second_burst, target_change)
 		if (recast > 0) then
 			if (settings.step_down == 2 and tier > 1) then
 				spell = elements[spell_element][cast_type]
+				local suffix = ''
 				while (tier > 1) do
 					tier = tier - 1
 					tier = (tier >= 1 and tier or 1)
-					spell = spell .. (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and magic_tiers[tier].suffix or ''))
+					suffix = (cast_type == 'jutsu' and (': ' .. jutsu_tiers[tier].suffix or magic_tiers[tier].suffix) or (tier > 1 and magic_tiers[tier].suffix or ''))
 
 					local recast = check_recast(spell)
 					if (not recast or recast <= 0) then
 						break
 					end
-					spell = nil
 				end
+				spell = spell .. suffix
 			end
 		end
 	end
