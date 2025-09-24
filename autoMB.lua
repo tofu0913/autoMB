@@ -386,6 +386,7 @@ function get_spell(skillchain, last_spell, second_burst, target_change)
 	end
 
 	debug_message('Best Spell Element: '..spell_element,true)
+	if max_tiers[cast_type] == nil then return end
 
 	if (tier > max_tiers[cast_type]) then
 		tier = max_tiers[cast_type]
